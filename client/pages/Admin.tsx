@@ -4,18 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Camera, 
-  ArrowLeft, 
-  Check, 
-  X, 
-  Clock, 
-  CheckCircle, 
-  XCircle, 
-  Users, 
+import { AdminLogin } from "@/components/AdminLogin";
+import {
+  Camera,
+  ArrowLeft,
+  Check,
+  X,
+  Clock,
+  CheckCircle,
+  XCircle,
+  Users,
   Image as ImageIcon,
   Filter,
-  Calendar
+  Calendar,
+  LogOut
 } from "lucide-react";
 
 // Extended mock data for admin view
