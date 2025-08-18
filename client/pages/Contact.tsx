@@ -59,6 +59,9 @@ export default function Contact() {
             <Link to="/contact" className="text-foreground hover:text-primary transition-colors">
               Contact
             </Link>
+            <Link to="/admin" className="text-muted-foreground hover:text-primary transition-colors">
+              Admin
+            </Link>
           </nav>
         </div>
       </header>
