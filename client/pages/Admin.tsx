@@ -165,6 +165,11 @@ export default function Admin() {
   const approvedCount = getImagesByStatus("approved").length;
   const rejectedCount = getImagesByStatus("rejected").length;
 
+  // Show login form if not authenticated
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={setIsAuthenticated} />;
+  }
+
   const renderImageCard = (image: any, showActions = false) => (
     <Card key={image.id} className="overflow-hidden">
       <div className="relative aspect-video">
