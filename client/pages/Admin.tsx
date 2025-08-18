@@ -118,10 +118,10 @@ export default function Admin() {
   }, []);
 
   const handleReject = useCallback((imageId: number, reason?: string) => {
-    setImages(prev => prev.map(img => 
-      img.id === imageId 
-        ? { 
-            ...img, 
+    setImages(prev => prev.map(img =>
+      img.id === imageId
+        ? {
+            ...img,
             status: "rejected" as const,
             rejectedDate: new Date().toISOString().split('T')[0],
             rejectedBy: "Current Admin",
@@ -129,6 +129,10 @@ export default function Admin() {
           }
         : img
     ));
+  }, []);
+
+  const handleLogout = useCallback(() => {
+    setIsAuthenticated(false);
   }, []);
 
   const getImagesByStatus = (status: ImageStatus) => {
