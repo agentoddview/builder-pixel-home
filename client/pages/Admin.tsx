@@ -102,6 +102,7 @@ type ImageStatus = "pending" | "approved" | "rejected";
 export default function Admin() {
   const [images, setImages] = useState(mockImages);
   const [selectedTab, setSelectedTab] = useState("pending");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleApprove = useCallback((imageId: number) => {
     setImages(prev => prev.map(img => 
