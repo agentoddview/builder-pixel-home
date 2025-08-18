@@ -274,17 +274,23 @@ export default function Admin() {
               </div>
             </div>
           </Link>
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="text-muted-foreground hover:text-primary transition-colors">
-              Gallery
-            </Link>
-            <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
-              Contact
-            </Link>
-            <Link to="/admin" className="text-foreground hover:text-primary transition-colors">
-              Admin
-            </Link>
-          </nav>
+          <div className="flex items-center space-x-4">
+            <nav className="hidden md:flex items-center space-x-6">
+              <Link to="/" className="text-muted-foreground hover:text-primary transition-colors">
+                Gallery
+              </Link>
+              <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+                Contact
+              </Link>
+              <Link to="/admin" className="text-foreground hover:text-primary transition-colors">
+                Admin
+              </Link>
+            </nav>
+            <Button variant="outline" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 
