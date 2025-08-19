@@ -20,66 +20,10 @@ import {
   Loader2,
 } from "lucide-react";
 
-// Mock data for demo purposes
-const mockImages = [
-  {
-    id: 1,
-    url: "/placeholder.svg",
-    title: "Mountain Landscape",
-    status: "approved" as const,
-    uploadedBy: "John Doe",
-    uploadDate: "2024-01-15",
-    tags: ["nature", "landscape", "mountains"],
-  },
-  {
-    id: 2,
-    url: "/placeholder.svg",
-    title: "City Architecture",
-    status: "pending" as const,
-    uploadedBy: "Jane Smith",
-    uploadDate: "2024-01-14",
-    tags: ["architecture", "city", "modern"],
-  },
-  {
-    id: 3,
-    url: "/placeholder.svg",
-    title: "Ocean Waves",
-    status: "approved" as const,
-    uploadedBy: "Mike Johnson",
-    uploadDate: "2024-01-13",
-    tags: ["ocean", "waves", "blue"],
-  },
-  {
-    id: 4,
-    url: "/placeholder.svg",
-    title: "Forest Path",
-    status: "approved" as const,
-    uploadedBy: "Sarah Wilson",
-    uploadDate: "2024-01-12",
-    tags: ["forest", "path", "green"],
-  },
-  {
-    id: 5,
-    url: "/placeholder.svg",
-    title: "Desert Sunset",
-    status: "pending" as const,
-    uploadedBy: "Tom Brown",
-    uploadDate: "2024-01-11",
-    tags: ["desert", "sunset", "orange"],
-  },
-  {
-    id: 6,
-    url: "/placeholder.svg",
-    title: "Urban Street",
-    status: "approved" as const,
-    uploadedBy: "Lisa Davis",
-    uploadDate: "2024-01-10",
-    tags: ["street", "urban", "night"],
-  },
-];
-
 export default function Index() {
-  const [images] = useState(mockImages);
+  const [images, setImages] = useState<Image[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<
     "all" | "approved" | "pending"
