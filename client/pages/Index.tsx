@@ -224,7 +224,7 @@ export default function Index() {
                     value={statusFilter}
                     onChange={(e) =>
                       setStatusFilter(
-                        e.target.value as "all" | "approved" | "pending",
+                        e.target.value as "all" | "approved" | "pending" | "rejected",
                       )
                     }
                     className="px-3 py-2 rounded-md border border-input bg-background text-foreground text-sm"
