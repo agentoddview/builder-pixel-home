@@ -34,6 +34,7 @@ export default function Index() {
   const [showUpload, setShowUpload] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [deletingImageId, setDeletingImageId] = useState<number | null>(null);
 
   // Load images on component mount and check admin status
   useEffect(() => {
