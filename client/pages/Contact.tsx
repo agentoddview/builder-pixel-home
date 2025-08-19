@@ -218,7 +218,7 @@ export default function Contact() {
                     <div>
                       <p className="font-medium text-foreground">Email</p>
                       <p className="text-muted-foreground">
-                        hello@pixelvault.com
+                        hello@tiktoklibrary.com
                       </p>
                     </div>
                   </div>
