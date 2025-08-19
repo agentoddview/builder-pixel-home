@@ -310,7 +310,7 @@ export default function Index() {
                     <img
                       src={image.url}
                       alt={image.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 bg-muted/30"
                       onError={(e) => {
                         // Fallback to placeholder if image fails to load
                         e.currentTarget.src = "/placeholder.svg";
