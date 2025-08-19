@@ -300,6 +300,7 @@ export default function Index() {
         <ImageUpload
           onClose={() => setShowUpload(false)}
           onUpload={handleImageUpload}
+          uploading={uploading}
         />
       )}
     </div>
