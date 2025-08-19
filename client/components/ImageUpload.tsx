@@ -298,10 +298,17 @@ export function ImageUpload({ onClose, onUpload, uploading = false }: ImageUploa
             </Button>
             <Button
               onClick={handleSubmit}
-              disabled={images.length === 0}
+              disabled={images.length === 0 || uploading}
               className="min-w-[120px]"
             >
-              Upload {images.length > 0 && `(${images.length})`}
+              {uploading ? (
+                <>
+                  <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full mr-2" />
+                  Uploading...
+                </>
+              ) : (
+                <>Upload {images.length > 0 && `(${images.length})`}</>
+              )}
             </Button>
           </div>
         </CardContent>
