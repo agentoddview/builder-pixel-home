@@ -130,7 +130,11 @@ export function ImageUpload({ onClose, onUpload, uploading = false }: ImageUploa
 
   const handleSubmit = useCallback(() => {
     if (images.length === 0) return;
-    onUpload(images.map((img) => img.file));
+    onUpload(images.map((img) => ({
+      file: img.file,
+      title: img.title,
+      tags: img.tags
+    })));
   }, [images, onUpload]);
 
   return (
