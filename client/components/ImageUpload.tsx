@@ -10,7 +10,9 @@ import { cn } from "@/lib/utils";
 
 interface ImageUploadProps {
   onClose: () => void;
-  onUpload: (imageData: Array<{ file: File; title: string; tags: string[] }>) => void;
+  onUpload: (
+    imageData: Array<{ file: File; title: string; tags: string[] }>,
+  ) => void;
   uploading?: boolean;
 }
 
@@ -21,7 +23,11 @@ interface ImagePreview {
   tags: string[];
 }
 
-export function ImageUpload({ onClose, onUpload, uploading = false }: ImageUploadProps) {
+export function ImageUpload({
+  onClose,
+  onUpload,
+  uploading = false,
+}: ImageUploadProps) {
   const [images, setImages] = useState<ImagePreview[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [dragCounter, setDragCounter] = useState(0);
@@ -130,11 +136,13 @@ export function ImageUpload({ onClose, onUpload, uploading = false }: ImageUploa
 
   const handleSubmit = useCallback(() => {
     if (images.length === 0) return;
-    onUpload(images.map((img) => ({
-      file: img.file,
-      title: img.title,
-      tags: img.tags
-    })));
+    onUpload(
+      images.map((img) => ({
+        file: img.file,
+        title: img.title,
+        tags: img.tags,
+      })),
+    );
   }, [images, onUpload]);
 
   return (

@@ -51,14 +51,17 @@ export default function Index() {
         setIsAdmin(adminStatus);
         loadImages();
         // Reset filter if no longer admin and on non-approved filter
-        if (!adminStatus && (statusFilter === 'pending' || statusFilter === 'rejected')) {
-          setStatusFilter('all');
+        if (
+          !adminStatus &&
+          (statusFilter === "pending" || statusFilter === "rejected")
+        ) {
+          setStatusFilter("all");
         }
       }
     };
 
-    window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
   }, [isAdmin, statusFilter]);
 
   const loadImages = async () => {
@@ -71,7 +74,7 @@ export default function Index() {
       const adminStatus = authApi.isLoggedIn();
       const filteredImages = adminStatus
         ? fetchedImages // Admins see all images
-        : fetchedImages.filter(img => img.status === 'approved'); // Regular users only see approved
+        : fetchedImages.filter((img) => img.status === "approved"); // Regular users only see approved
 
       setImages(filteredImages);
     } catch (err) {
@@ -93,44 +96,54 @@ export default function Index() {
     return matchesSearch && matchesStatus;
   });
 
-  const handleImageUpload = useCallback(async (imageData: Array<{ file: File; title: string; tags: string[] }>) => {
-    try {
-      setUploading(true);
-      
-      // Upload each image
-      const uploadPromises = imageData.map(({ file, title, tags }) =>
-        imageApi.uploadImage(file, title, tags, "Anonymous User")
-      );
-      
-      await Promise.all(uploadPromises);
-      
-      // Reload images to show the new uploads
-      await loadImages();
-      setShowUpload(false);
-    } catch (err) {
-      console.error("Upload error:", err);
-      setError("Failed to upload images. Please try again.");
-    } finally {
-      setUploading(false);
-    }
-  }, []);
+  const handleImageUpload = useCallback(
+    async (imageData: Array<{ file: File; title: string; tags: string[] }>) => {
+      try {
+        setUploading(true);
 
-  const handleDeleteImage = useCallback(async (imageId: number, imageName: string) => {
-    if (!confirm(`Are you sure you want to permanently delete "${imageName}"? This action cannot be undone.`)) {
-      return;
-    }
+        // Upload each image
+        const uploadPromises = imageData.map(({ file, title, tags }) =>
+          imageApi.uploadImage(file, title, tags, "Anonymous User"),
+        );
 
-    try {
-      setDeletingImageId(imageId);
-      await adminApi.deleteImage(imageId);
-      await loadImages(); // Reload to get updated data
-    } catch (err) {
-      console.error("Error deleting image:", err);
-      setError("Failed to delete image. Please try again.");
-    } finally {
-      setDeletingImageId(null);
-    }
-  }, []);
+        await Promise.all(uploadPromises);
+
+        // Reload images to show the new uploads
+        await loadImages();
+        setShowUpload(false);
+      } catch (err) {
+        console.error("Upload error:", err);
+        setError("Failed to upload images. Please try again.");
+      } finally {
+        setUploading(false);
+      }
+    },
+    [],
+  );
+
+  const handleDeleteImage = useCallback(
+    async (imageId: number, imageName: string) => {
+      if (
+        !confirm(
+          `Are you sure you want to permanently delete "${imageName}"? This action cannot be undone.`,
+        )
+      ) {
+        return;
+      }
+
+      try {
+        setDeletingImageId(imageId);
+        await adminApi.deleteImage(imageId);
+        await loadImages(); // Reload to get updated data
+      } catch (err) {
+        console.error("Error deleting image:", err);
+        setError("Failed to delete image. Please try again.");
+      } finally {
+        setDeletingImageId(null);
+      }
+    },
+    [],
+  );
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -173,17 +186,26 @@ export default function Index() {
             </div>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               Gallery
             </Link>
-            <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+            <Link
+              to="/contact"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
               Contact
             </Link>
-            <Link to="/admin" className="text-muted-foreground hover:text-primary transition-colors">
+            <Link
+              to="/admin"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
               Admin
             </Link>
           </nav>
-          <Button 
+          <Button
             onClick={() => setShowUpload(true)}
             className="flex items-center space-x-2"
             disabled={uploading}
@@ -202,12 +224,13 @@ export default function Index() {
             Share Your <span className="text-primary">Visual Stories</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Upload, share, and discover amazing images in our curated collection. 
-            Every image goes through our approval process to ensure quality.
+            Upload, share, and discover amazing images in our curated
+            collection. Every image goes through our approval process to ensure
+            quality.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               onClick={() => setShowUpload(true)}
               className="flex items-center space-x-2"
               disabled={uploading}
@@ -228,9 +251,9 @@ export default function Index() {
         {error && (
           <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
             <p className="text-red-800 dark:text-red-200">{error}</p>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               onClick={loadImages}
               className="mt-2"
             >
@@ -243,8 +266,12 @@ export default function Index() {
         {loading ? (
           <div className="text-center py-12">
             <Loader2 className="h-12 w-12 text-muted-foreground mx-auto mb-4 animate-spin" />
-            <h3 className="text-lg font-medium text-foreground mb-2">Loading images...</h3>
-            <p className="text-muted-foreground">Please wait while we fetch the image library.</p>
+            <h3 className="text-lg font-medium text-foreground mb-2">
+              Loading images...
+            </h3>
+            <p className="text-muted-foreground">
+              Please wait while we fetch the image library.
+            </p>
           </div>
         ) : (
           <>
@@ -266,7 +293,11 @@ export default function Index() {
                     value={statusFilter}
                     onChange={(e) =>
                       setStatusFilter(
-                        e.target.value as "all" | "approved" | "pending" | "rejected",
+                        e.target.value as
+                          | "all"
+                          | "approved"
+                          | "pending"
+                          | "rejected",
                       )
                     }
                     className="px-3 py-2 rounded-md border border-input bg-background text-foreground text-sm"
@@ -299,13 +330,18 @@ export default function Index() {
             </div>
 
             {/* Image Gallery */}
-            <div className={`grid gap-6 ${
-              viewMode === "grid" 
-                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
-                : "grid-cols-1"
-            }`}>
+            <div
+              className={`grid gap-6 ${
+                viewMode === "grid"
+                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                  : "grid-cols-1"
+              }`}
+            >
               {filteredImages.map((image) => (
-                <Card key={image.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300">
+                <Card
+                  key={image.id}
+                  className="group overflow-hidden hover:shadow-lg transition-all duration-300"
+                >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img
                       src={image.url}
@@ -344,14 +380,20 @@ export default function Index() {
                     </div>
                   </div>
                   <CardContent className="p-4">
-                    <h3 className="font-semibold text-foreground mb-2">{image.title}</h3>
+                    <h3 className="font-semibold text-foreground mb-2">
+                      {image.title}
+                    </h3>
                     <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
                       <span>by {image.uploadedBy}</span>
                       <span>{image.uploadDate}</span>
                     </div>
                     <div className="flex flex-wrap gap-1 mb-3">
                       {image.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="text-xs"
+                        >
                           {tag}
                         </Badge>
                       ))}
@@ -385,12 +427,13 @@ export default function Index() {
             {filteredImages.length === 0 && !loading && (
               <div className="text-center py-12">
                 <Camera className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-foreground mb-2">No images found</h3>
+                <h3 className="text-lg font-medium text-foreground mb-2">
+                  No images found
+                </h3>
                 <p className="text-muted-foreground mb-4">
-                  {searchTerm || statusFilter !== "all" 
-                    ? "Try adjusting your search or filters" 
-                    : "Be the first to upload an image to the library!"
-                  }
+                  {searchTerm || statusFilter !== "all"
+                    ? "Try adjusting your search or filters"
+                    : "Be the first to upload an image to the library!"}
                 </p>
                 <Button onClick={() => setShowUpload(true)}>
                   Upload First Image

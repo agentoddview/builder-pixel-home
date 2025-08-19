@@ -102,41 +102,6 @@
       "fileSize": "1.2 MB",
       "dimensions": "1280x720",
       "mimeType": "image/jpeg"
-    },
-    {
-      "id": 6,
-      "url": "/uploads/image-1755562794410-84635554.jpg",
-      "filename": "image-1755562794410-84635554.jpg",
-      "originalName": "ray_ban_rb4264_chromance.jpg",
-      "title": "ray ban rb4264 chromance",
-      "status": "approved",
-      "uploadedBy": "Anonymous User",
-      "uploadDate": "2025-08-19",
-      "tags": [
-        "test"
-      ],
-      "fileSize": "136.53 KB",
-      "dimensions": "1920x1080",
-      "mimeType": "image/jpeg",
-      "approvedDate": "2025-08-19",
-      "approvedBy": "Current Admin"
-    },
-    {
-      "id": 7,
-      "url": "/uploads/image-1755563797335-909398233.jpg",
-      "filename": "image-1755563797335-909398233.jpg",
-      "originalName": "ray_ban_rb3686_chromance.jpg",
-      "title": "ray ban rb3686 chromance",
-      "status": "rejected",
-      "uploadedBy": "Anonymous User",
-      "uploadDate": "2025-08-19",
-      "tags": [],
-      "fileSize": "131.34 KB",
-      "dimensions": "1920x1080",
-      "mimeType": "image/jpeg",
-      "rejectedDate": "2025-08-19",
-      "rejectedBy": "Current Admin",
-      "rejectionReason": "Content policy violation"
     }
   ],
   "nextId": 8

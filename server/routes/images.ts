@@ -1,6 +1,11 @@
 import { RequestHandler } from "express";
 import { imageStore } from "../store/imageStore";
-import { ImagesResponse, ImageResponse, ApproveImageRequest, RejectImageRequest } from "@shared/api";
+import {
+  ImagesResponse,
+  ImageResponse,
+  ApproveImageRequest,
+  RejectImageRequest,
+} from "@shared/api";
 
 // Get all images
 export const getAllImages: RequestHandler = (req, res) => {
@@ -8,13 +13,13 @@ export const getAllImages: RequestHandler = (req, res) => {
     const images = imageStore.getAllImages();
     const response: ImagesResponse = {
       success: true,
-      data: images
+      data: images,
     };
     res.json(response);
   } catch (error) {
     const response: ImagesResponse = {
       success: false,
-      error: "Failed to fetch images"
+      error: "Failed to fetch images",
     };
     res.status(500).json(response);
   }
@@ -24,23 +29,23 @@ export const getAllImages: RequestHandler = (req, res) => {
 export const getImagesByStatus: RequestHandler = (req, res) => {
   try {
     const { status } = req.params;
-    if (!['pending', 'approved', 'rejected'].includes(status)) {
+    if (!["pending", "approved", "rejected"].includes(status)) {
       return res.status(400).json({
         success: false,
-        error: "Invalid status"
+        error: "Invalid status",
       });
     }
-    
+
     const images = imageStore.getImagesByStatus(status as any);
     const response: ImagesResponse = {
       success: true,
-      data: images
+      data: images,
     };
     res.json(response);
   } catch (error) {
     const response: ImagesResponse = {
       success: false,
-      error: "Failed to fetch images"
+      error: "Failed to fetch images",
     };
     res.status(500).json(response);
   }
@@ -53,7 +58,7 @@ export const getImageById: RequestHandler = (req, res) => {
     if (isNaN(id)) {
       return res.status(400).json({
         success: false,
-        error: "Invalid image ID"
+        error: "Invalid image ID",
       });
     }
 
@@ -61,19 +66,19 @@ export const getImageById: RequestHandler = (req, res) => {
     if (!image) {
       return res.status(404).json({
         success: false,
-        error: "Image not found"
+        error: "Image not found",
       });
     }
 
     const response: ImageResponse = {
       success: true,
-      data: image
+      data: image,
     };
     res.json(response);
   } catch (error) {
     const response: ImageResponse = {
       success: false,
-      error: "Failed to fetch image"
+      error: "Failed to fetch image",
     };
     res.status(500).json(response);
   }
@@ -86,7 +91,7 @@ export const approveImage: RequestHandler = (req, res) => {
     if (isNaN(id)) {
       return res.status(400).json({
         success: false,
-        error: "Invalid image ID"
+        error: "Invalid image ID",
       });
     }
 
@@ -94,7 +99,7 @@ export const approveImage: RequestHandler = (req, res) => {
     if (!approvedBy) {
       return res.status(400).json({
         success: false,
-        error: "approvedBy is required"
+        error: "approvedBy is required",
       });
     }
 
@@ -102,19 +107,19 @@ export const approveImage: RequestHandler = (req, res) => {
     if (!image) {
       return res.status(404).json({
         success: false,
-        error: "Image not found"
+        error: "Image not found",
       });
     }
 
     const response: ImageResponse = {
       success: true,
-      data: image
+      data: image,
     };
     res.json(response);
   } catch (error) {
     const response: ImageResponse = {
       success: false,
-      error: "Failed to approve image"
+      error: "Failed to approve image",
     };
     res.status(500).json(response);
   }
@@ -127,7 +132,7 @@ export const rejectImage: RequestHandler = (req, res) => {
     if (isNaN(id)) {
       return res.status(400).json({
         success: false,
-        error: "Invalid image ID"
+        error: "Invalid image ID",
       });
     }
 
@@ -135,7 +140,7 @@ export const rejectImage: RequestHandler = (req, res) => {
     if (!rejectedBy) {
       return res.status(400).json({
         success: false,
-        error: "rejectedBy is required"
+        error: "rejectedBy is required",
       });
     }
 
@@ -143,19 +148,19 @@ export const rejectImage: RequestHandler = (req, res) => {
     if (!image) {
       return res.status(404).json({
         success: false,
-        error: "Image not found"
+        error: "Image not found",
       });
     }
 
     const response: ImageResponse = {
       success: true,
-      data: image
+      data: image,
     };
     res.json(response);
   } catch (error) {
     const response: ImageResponse = {
       success: false,
-      error: "Failed to reject image"
+      error: "Failed to reject image",
     };
     res.status(500).json(response);
   }
@@ -168,7 +173,7 @@ export const deleteImage: RequestHandler = (req, res) => {
     if (isNaN(id)) {
       return res.status(400).json({
         success: false,
-        error: "Invalid image ID"
+        error: "Invalid image ID",
       });
     }
 
@@ -176,18 +181,18 @@ export const deleteImage: RequestHandler = (req, res) => {
     if (!success) {
       return res.status(404).json({
         success: false,
-        error: "Image not found"
+        error: "Image not found",
       });
     }
 
     res.json({
       success: true,
-      data: { id }
+      data: { id },
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: "Failed to delete image"
+      error: "Failed to delete image",
     });
   }
 };

@@ -28,7 +28,10 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
       await authApi.login(credentials.username, credentials.password);
       onLogin(true);
     } catch (err: any) {
-      setError(err.message || "Invalid credentials. Try username: 'admin', password: 'password123'");
+      setError(
+        err.message ||
+          "Invalid credentials. Try username: 'admin', password: 'password123'",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -114,7 +117,6 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
               )}
             </Button>
           </form>
-
         </CardContent>
       </Card>
     </div>

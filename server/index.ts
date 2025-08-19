@@ -9,7 +9,7 @@ import {
   getImageById,
   approveImage,
   rejectImage,
-  deleteImage
+  deleteImage,
 } from "./routes/images";
 import { upload, uploadImage, uploadMultipleImages } from "./routes/upload";
 import { login, verifyAdmin } from "./routes/auth";
@@ -23,7 +23,10 @@ export function createServer() {
   app.use(express.urlencoded({ extended: true }));
 
   // Serve uploaded files
-  app.use('/uploads', express.static(path.join(process.cwd(), 'public', 'uploads')));
+  app.use(
+    "/uploads",
+    express.static(path.join(process.cwd(), "public", "uploads")),
+  );
 
   // Auth routes
   app.post("/api/auth/login", login);
@@ -34,8 +37,12 @@ export function createServer() {
   app.get("/api/images/:id", getImageById);
 
   // Upload routes (no auth required for users to upload)
-  app.post("/api/upload", upload.single('image'), uploadImage);
-  app.post("/api/upload/multiple", upload.array('images', 10), uploadMultipleImages);
+  app.post("/api/upload", upload.single("image"), uploadImage);
+  app.post(
+    "/api/upload/multiple",
+    upload.array("images", 10),
+    uploadMultipleImages,
+  );
 
   // Admin routes (require authentication)
   app.post("/api/admin/images/:id/approve", verifyAdmin, approveImage);

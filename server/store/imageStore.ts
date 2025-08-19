@@ -27,19 +27,25 @@ class ImageStore {
   private loadImages() {
     try {
       if (fs.existsSync(DATA_FILE)) {
-        const data = fs.readFileSync(DATA_FILE, 'utf8');
+        const data = fs.readFileSync(DATA_FILE, "utf8");
         const parsed = JSON.parse(data);
         this.images = parsed.images || [];
         nextId = parsed.nextId || 1;
       } else {
         this.images = [...initialImages];
-        nextId = this.images.length > 0 ? Math.max(...this.images.map(img => img.id)) + 1 : 1;
+        nextId =
+          this.images.length > 0
+            ? Math.max(...this.images.map((img) => img.id)) + 1
+            : 1;
         this.saveImages();
       }
     } catch (error) {
-      console.error('Error loading images:', error);
+      console.error("Error loading images:", error);
       this.images = [...initialImages];
-      nextId = this.images.length > 0 ? Math.max(...this.images.map(img => img.id)) + 1 : 1;
+      nextId =
+        this.images.length > 0
+          ? Math.max(...this.images.map((img) => img.id)) + 1
+          : 1;
     }
   }
 
@@ -47,11 +53,11 @@ class ImageStore {
     try {
       const data = {
         images: this.images,
-        nextId
+        nextId,
       };
       fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
     } catch (error) {
-      console.error('Error saving images:', error);
+      console.error("Error saving images:", error);
     }
   }
 
@@ -60,17 +66,17 @@ class ImageStore {
   }
 
   getImagesByStatus(status: ImageStatus): Image[] {
-    return this.images.filter(img => img.status === status);
+    return this.images.filter((img) => img.status === status);
   }
 
   getImageById(id: number): Image | undefined {
-    return this.images.find(img => img.id === id);
+    return this.images.find((img) => img.id === id);
   }
 
-  addImage(imageData: Omit<Image, 'id'>): Image {
+  addImage(imageData: Omit<Image, "id">): Image {
     const newImage: Image = {
       id: nextId++,
-      ...imageData
+      ...imageData,
     };
     this.images.push(newImage);
     this.saveImages();
@@ -78,7 +84,7 @@ class ImageStore {
   }
 
   updateImage(id: number, updates: Partial<Image>): Image | undefined {
-    const index = this.images.findIndex(img => img.id === id);
+    const index = this.images.findIndex((img) => img.id === id);
     if (index === -1) return undefined;
 
     this.images[index] = { ...this.images[index], ...updates };
@@ -87,7 +93,7 @@ class ImageStore {
   }
 
   deleteImage(id: number): boolean {
-    const index = this.images.findIndex(img => img.id === id);
+    const index = this.images.findIndex((img) => img.id === id);
     if (index === -1) return false;
 
     this.images.splice(index, 1);
@@ -97,18 +103,22 @@ class ImageStore {
 
   approveImage(id: number, approvedBy: string): Image | undefined {
     return this.updateImage(id, {
-      status: 'approved',
-      approvedDate: new Date().toISOString().split('T')[0],
-      approvedBy
+      status: "approved",
+      approvedDate: new Date().toISOString().split("T")[0],
+      approvedBy,
     });
   }
 
-  rejectImage(id: number, rejectedBy: string, rejectionReason?: string): Image | undefined {
+  rejectImage(
+    id: number,
+    rejectedBy: string,
+    rejectionReason?: string,
+  ): Image | undefined {
     return this.updateImage(id, {
-      status: 'rejected',
-      rejectedDate: new Date().toISOString().split('T')[0],
+      status: "rejected",
+      rejectedDate: new Date().toISOString().split("T")[0],
       rejectedBy,
-      rejectionReason
+      rejectionReason,
     });
   }
 }
