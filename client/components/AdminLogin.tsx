@@ -24,22 +24,13 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
     setIsLoading(true);
     setError("");
 
-    // Simple demo authentication - in production use proper auth
-    if (
-      credentials.username === "admin" &&
-      credentials.password === "password123"
-    ) {
-      setTimeout(() => {
-        onLogin(true);
-        setIsLoading(false);
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        setError(
-          "Invalid credentials. Try username: 'admin', password: 'password123'",
-        );
-        setIsLoading(false);
-      }, 1000);
+    try {
+      await authApi.login(credentials.username, credentials.password);
+      onLogin(true);
+    } catch (err: any) {
+      setError(err.message || "Invalid credentials. Try username: 'admin', password: 'password123'");
+    } finally {
+      setIsLoading(false);
     }
   };
 
