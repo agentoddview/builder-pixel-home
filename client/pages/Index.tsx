@@ -33,8 +33,10 @@ export default function Index() {
   const [uploading, setUploading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Load images on component mount
+  // Load images on component mount and check admin status
   useEffect(() => {
+    const adminStatus = authApi.isLoggedIn();
+    setIsAdmin(adminStatus);
     loadImages();
   }, []);
 
@@ -43,7 +45,14 @@ export default function Index() {
       setLoading(true);
       setError("");
       const fetchedImages = await imageApi.getAllImages();
-      setImages(fetchedImages);
+
+      // Filter images based on admin status
+      const adminStatus = authApi.isLoggedIn();
+      const filteredImages = adminStatus
+        ? fetchedImages // Admins see all images
+        : fetchedImages.filter(img => img.status === 'approved'); // Regular users only see approved
+
+      setImages(filteredImages);
     } catch (err) {
       setError("Failed to load images. Please try again.");
       console.error("Error loading images:", err);
