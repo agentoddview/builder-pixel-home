@@ -41,6 +41,24 @@ export default function Index() {
     loadImages();
   }, []);
 
+  // Listen for admin status changes (like logout)
+  useEffect(() => {
+    const handleFocus = () => {
+      const adminStatus = authApi.isLoggedIn();
+      if (adminStatus !== isAdmin) {
+        setIsAdmin(adminStatus);
+        loadImages();
+        // Reset filter if no longer admin and on non-approved filter
+        if (!adminStatus && (statusFilter === 'pending' || statusFilter === 'rejected')) {
+          setStatusFilter('all');
+        }
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [isAdmin, statusFilter]);
+
   const loadImages = async () => {
     try {
       setLoading(true);
