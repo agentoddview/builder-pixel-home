@@ -349,13 +349,34 @@ export default function Index() {
                       <span>by {image.uploadedBy}</span>
                       <span>{image.uploadDate}</span>
                     </div>
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-1 mb-3">
                       {image.tags.map((tag) => (
                         <Badge key={tag} variant="secondary" className="text-xs">
                           {tag}
                         </Badge>
                       ))}
                     </div>
+                    {isAdmin && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => handleDeleteImage(image.id, image.title)}
+                        disabled={deletingImageId === image.id}
+                      >
+                        {deletingImageId === image.id ? (
+                          <>
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            Deleting...
+                          </>
+                        ) : (
+                          <>
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Delete
+                          </>
+                        )}
+                      </Button>
+                    )}
                   </CardContent>
                 </Card>
               ))}
