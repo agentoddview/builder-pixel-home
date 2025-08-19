@@ -115,15 +115,6 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
             </Button>
           </form>
 
-          <div className="mt-6 text-center">
-            <div className="bg-muted/50 rounded-lg p-3">
-              <p className="text-xs text-muted-foreground mb-2">
-                Demo Credentials:
-              </p>
-              <p className="text-xs font-mono">Username: admin</p>
-              <p className="text-xs font-mono">Password: password123</p>
-            </div>
-          </div>
         </CardContent>
       </Card>
     </div>
