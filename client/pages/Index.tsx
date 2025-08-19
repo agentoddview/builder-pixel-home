@@ -115,6 +115,23 @@ export default function Index() {
     }
   }, []);
 
+  const handleDeleteImage = useCallback(async (imageId: number, imageName: string) => {
+    if (!confirm(`Are you sure you want to permanently delete "${imageName}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      setDeletingImageId(imageId);
+      await adminApi.deleteImage(imageId);
+      await loadImages(); // Reload to get updated data
+    } catch (err) {
+      console.error("Error deleting image:", err);
+      setError("Failed to delete image. Please try again.");
+    } finally {
+      setDeletingImageId(null);
+    }
+  }, []);
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "approved":
