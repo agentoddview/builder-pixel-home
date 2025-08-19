@@ -65,14 +65,14 @@ export default function Index() {
   const handleImageUpload = useCallback(async (imageData: Array<{ file: File; title: string; tags: string[] }>) => {
     try {
       setUploading(true);
-
+      
       // Upload each image
       const uploadPromises = imageData.map(({ file, title, tags }) =>
         imageApi.uploadImage(file, title, tags, "Anonymous User")
       );
-
+      
       await Promise.all(uploadPromises);
-
+      
       // Reload images to show the new uploads
       await loadImages();
       setShowUpload(false);
@@ -121,28 +121,20 @@ export default function Index() {
             </div>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
-            <Link
-              to="/"
-              className="text-foreground hover:text-primary transition-colors"
-            >
+            <Link to="/" className="text-foreground hover:text-primary transition-colors">
               Gallery
             </Link>
-            <Link
-              to="/contact"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
+            <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
               Contact
             </Link>
-            <Link
-              to="/admin"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
+            <Link to="/admin" className="text-muted-foreground hover:text-primary transition-colors">
               Admin
             </Link>
           </nav>
-          <Button
+          <Button 
             onClick={() => setShowUpload(true)}
             className="flex items-center space-x-2"
+            disabled={uploading}
           >
             <Upload className="h-4 w-4" />
             <span>Upload</span>
@@ -158,15 +150,15 @@ export default function Index() {
             Share Your <span className="text-primary">Visual Stories</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Upload, share, and discover amazing images in our curated
-            collection. Every image goes through our approval process to ensure
-            quality.
+            Upload, share, and discover amazing images in our curated collection. 
+            Every image goes through our approval process to ensure quality.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
+            <Button 
+              size="lg" 
               onClick={() => setShowUpload(true)}
               className="flex items-center space-x-2"
+              disabled={uploading}
             >
               <Upload className="h-5 w-5" />
               <span>Upload Images</span>
@@ -180,118 +172,140 @@ export default function Index() {
           </div>
         </div>
 
-        {/* Search and Filters */}
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="flex-1 max-w-md relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search images by title or tags..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <div className="flex items-center space-x-2">
-              <Filter className="h-4 w-4 text-muted-foreground" />
-              <select
-                value={statusFilter}
-                onChange={(e) =>
-                  setStatusFilter(
-                    e.target.value as "all" | "approved" | "pending",
-                  )
-                }
-                className="px-3 py-2 rounded-md border border-input bg-background text-foreground text-sm"
-              >
-                <option value="all">All Images</option>
-                <option value="approved">Approved</option>
-                <option value="pending">Pending</option>
-              </select>
-              <div className="flex rounded-md border border-input">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("grid")}
-                  className="rounded-r-none"
-                >
-                  <Grid className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("list")}
-                  className="rounded-l-none"
-                >
-                  <List className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Image Gallery */}
-        <div
-          className={`grid gap-6 ${
-            viewMode === "grid"
-              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-              : "grid-cols-1"
-          }`}
-        >
-          {filteredImages.map((image) => (
-            <Card
-              key={image.id}
-              className="group overflow-hidden hover:shadow-lg transition-all duration-300"
+        {/* Error State */}
+        {error && (
+          <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <p className="text-red-800 dark:text-red-200">{error}</p>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={loadImages}
+              className="mt-2"
             >
-              <div className="relative aspect-square overflow-hidden">
-                <img
-                  src={image.url}
-                  alt={image.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-2 right-2">
-                  <Badge className={getStatusColor(image.status)}>
-                    <div className="flex items-center space-x-1">
-                      {getStatusIcon(image.status)}
-                      <span className="capitalize">{image.status}</span>
-                    </div>
-                  </Badge>
-                </div>
-              </div>
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-foreground mb-2">
-                  {image.title}
-                </h3>
-                <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
-                  <span>by {image.uploadedBy}</span>
-                  <span>{image.uploadDate}</span>
-                </div>
-                <div className="flex flex-wrap gap-1">
-                  {image.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {filteredImages.length === 0 && (
-          <div className="text-center py-12">
-            <Camera className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-foreground mb-2">
-              No images found
-            </h3>
-            <p className="text-muted-foreground mb-4">
-              {searchTerm || statusFilter !== "all"
-                ? "Try adjusting your search or filters"
-                : "Be the first to upload an image to the library!"}
-            </p>
-            <Button onClick={() => setShowUpload(true)}>
-              Upload First Image
+              Try Again
             </Button>
           </div>
+        )}
+
+        {/* Loading State */}
+        {loading ? (
+          <div className="text-center py-12">
+            <Loader2 className="h-12 w-12 text-muted-foreground mx-auto mb-4 animate-spin" />
+            <h3 className="text-lg font-medium text-foreground mb-2">Loading images...</h3>
+            <p className="text-muted-foreground">Please wait while we fetch the image library.</p>
+          </div>
+        ) : (
+          <>
+            {/* Search and Filters */}
+            <div className="mb-8">
+              <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div className="flex-1 max-w-md relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search images by title or tags..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Filter className="h-4 w-4 text-muted-foreground" />
+                  <select
+                    value={statusFilter}
+                    onChange={(e) =>
+                      setStatusFilter(
+                        e.target.value as "all" | "approved" | "pending",
+                      )
+                    }
+                    className="px-3 py-2 rounded-md border border-input bg-background text-foreground text-sm"
+                  >
+                    <option value="all">All Images</option>
+                    <option value="approved">Approved</option>
+                    <option value="pending">Pending</option>
+                  </select>
+                  <div className="flex rounded-md border border-input">
+                    <Button
+                      variant={viewMode === "grid" ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setViewMode("grid")}
+                      className="rounded-r-none"
+                    >
+                      <Grid className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant={viewMode === "list" ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setViewMode("list")}
+                      className="rounded-l-none"
+                    >
+                      <List className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Image Gallery */}
+            <div className={`grid gap-6 ${
+              viewMode === "grid" 
+                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+                : "grid-cols-1"
+            }`}>
+              {filteredImages.map((image) => (
+                <Card key={image.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300">
+                  <div className="relative aspect-square overflow-hidden">
+                    <img
+                      src={image.url}
+                      alt={image.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        // Fallback to placeholder if image fails to load
+                        e.currentTarget.src = "/placeholder.svg";
+                      }}
+                    />
+                    <div className="absolute top-2 right-2">
+                      <Badge className={getStatusColor(image.status)}>
+                        <div className="flex items-center space-x-1">
+                          {getStatusIcon(image.status)}
+                          <span className="capitalize">{image.status}</span>
+                        </div>
+                      </Badge>
+                    </div>
+                  </div>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold text-foreground mb-2">{image.title}</h3>
+                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
+                      <span>by {image.uploadedBy}</span>
+                      <span>{image.uploadDate}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {image.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {filteredImages.length === 0 && !loading && (
+              <div className="text-center py-12">
+                <Camera className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-foreground mb-2">No images found</h3>
+                <p className="text-muted-foreground mb-4">
+                  {searchTerm || statusFilter !== "all" 
+                    ? "Try adjusting your search or filters" 
+                    : "Be the first to upload an image to the library!"
+                  }
+                </p>
+                <Button onClick={() => setShowUpload(true)}>
+                  Upload First Image
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </main>
 
