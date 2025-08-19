@@ -26,7 +26,7 @@
       "filename": "placeholder.svg",
       "originalName": "City Architecture.jpg",
       "title": "City Architecture",
-      "status": "pending",
+      "status": "rejected",
       "uploadedBy": "Jane Smith",
       "uploadDate": "2024-01-14",
       "tags": [
@@ -36,7 +36,10 @@
       ],
       "fileSize": "3.1 MB",
       "dimensions": "2048x1366",
-      "mimeType": "image/jpeg"
+      "mimeType": "image/jpeg",
+      "rejectedDate": "2025-08-19",
+      "rejectedBy": "Current Admin",
+      "rejectionReason": "Content policy violation"
     },
     {
       "id": 3,
@@ -64,7 +67,7 @@
       "filename": "placeholder.svg",
       "originalName": "Abstract Art.jpg",
       "title": "Abstract Art",
-      "status": "pending",
+      "status": "rejected",
       "uploadedBy": "Sarah Wilson",
       "uploadDate": "2024-01-12",
       "tags": [
@@ -74,7 +77,10 @@
       ],
       "fileSize": "4.2 MB",
       "dimensions": "2560x1440",
-      "mimeType": "image/jpeg"
+      "mimeType": "image/jpeg",
+      "rejectedDate": "2025-08-19",
+      "rejectedBy": "Current Admin",
+      "rejectionReason": "Content policy violation"
     },
     {
       "id": 5,
@@ -96,7 +102,25 @@
       "fileSize": "1.2 MB",
       "dimensions": "1280x720",
       "mimeType": "image/jpeg"
+    },
+    {
+      "id": 6,
+      "url": "/uploads/image-1755562794410-84635554.jpg",
+      "filename": "image-1755562794410-84635554.jpg",
+      "originalName": "ray_ban_rb4264_chromance.jpg",
+      "title": "ray ban rb4264 chromance",
+      "status": "approved",
+      "uploadedBy": "Anonymous User",
+      "uploadDate": "2025-08-19",
+      "tags": [
+        "test"
+      ],
+      "fileSize": "136.53 KB",
+      "dimensions": "1920x1080",
+      "mimeType": "image/jpeg",
+      "approvedDate": "2025-08-19",
+      "approvedBy": "Current Admin"
     }
   ],
-  "nextId": 6
+  "nextId": 7
 }
