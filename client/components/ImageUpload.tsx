@@ -21,7 +21,7 @@ interface ImagePreview {
   tags: string[];
 }
 
-export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
+export function ImageUpload({ onClose, onUpload, uploading = false }: ImageUploadProps) {
   const [images, setImages] = useState<ImagePreview[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [dragCounter, setDragCounter] = useState(0);
