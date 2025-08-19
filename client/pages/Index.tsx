@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ImageUpload } from "@/components/ImageUpload";
-import { imageApi, authApi } from "@/lib/api";
+import { imageApi, authApi, adminApi } from "@/lib/api";
 import { Image } from "@shared/api";
 import {
   Camera,
