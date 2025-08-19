@@ -154,7 +154,7 @@ export default function Admin() {
         <img
           src={image.url}
           alt={image.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain bg-muted/30"
           onError={(e) => {
             // Fallback to placeholder if image fails to load
             e.currentTarget.src = "/placeholder.svg";
