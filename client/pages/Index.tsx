@@ -1,10 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ImageUpload } from "@/components/ImageUpload";
+import { imageApi } from "@/lib/api";
+import { Image } from "@shared/api";
 import {
   Camera,
   Search,
@@ -15,6 +17,7 @@ import {
   Star,
   Clock,
   CheckCircle,
+  Loader2,
 } from "lucide-react";
 
 // Mock data for demo purposes
