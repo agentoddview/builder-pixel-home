@@ -39,7 +39,7 @@ class ImageStore {
     } catch (error) {
       console.error('Error loading images:', error);
       this.images = [...initialImages];
-      nextId = Math.max(...this.images.map(img => img.id)) + 1;
+      nextId = this.images.length > 0 ? Math.max(...this.images.map(img => img.id)) + 1 : 1;
     }
   }
 
