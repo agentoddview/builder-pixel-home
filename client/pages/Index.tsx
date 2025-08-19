@@ -101,6 +101,8 @@ export default function Index() {
         return <CheckCircle className="h-4 w-4 text-green-500" />;
       case "pending":
         return <Clock className="h-4 w-4 text-yellow-500" />;
+      case "rejected":
+        return <XCircle className="h-4 w-4 text-red-500" />;
       default:
         return null;
     }
