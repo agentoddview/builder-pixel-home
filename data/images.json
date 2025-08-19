@@ -102,7 +102,40 @@
       "fileSize": "1.2 MB",
       "dimensions": "1280x720",
       "mimeType": "image/jpeg"
+    },
+    {
+      "id": 8,
+      "url": "/uploads/image-1755564863895-936622664.webp",
+      "filename": "image-1755564863895-936622664.webp",
+      "originalName": "noFilter (8).webp",
+      "title": "noFilter (8)",
+      "status": "rejected",
+      "uploadedBy": "Anonymous User",
+      "uploadDate": "2025-08-19",
+      "tags": [],
+      "fileSize": "56.41 KB",
+      "dimensions": "1920x1080",
+      "mimeType": "image/webp",
+      "rejectedDate": "2025-08-19",
+      "rejectedBy": "Current Admin",
+      "rejectionReason": "Content policy violation"
+    },
+    {
+      "id": 9,
+      "url": "/uploads/image-1755564926010-170295504.webp",
+      "filename": "image-1755564926010-170295504.webp",
+      "originalName": "2025_PayrollCalendar_Templates-preview-1.webp",
+      "title": "2025 PayrollCalendar Templates preview 1",
+      "status": "approved",
+      "uploadedBy": "Anonymous User",
+      "uploadDate": "2025-08-19",
+      "tags": [],
+      "fileSize": "41.34 KB",
+      "dimensions": "1920x1080",
+      "mimeType": "image/webp",
+      "approvedDate": "2025-08-19",
+      "approvedBy": "Current Admin"
     }
   ],
-  "nextId": 8
+  "nextId": 10
 }
