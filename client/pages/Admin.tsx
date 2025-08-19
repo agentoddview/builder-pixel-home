@@ -214,37 +214,54 @@ export default function Admin() {
           ))}
         </div>
 
-        {showActions && image.status === "pending" && (
-          <div className="flex space-x-2">
-            <Button 
-              size="sm" 
-              onClick={() => handleApprove(image.id)}
-              className="flex-1"
-              disabled={actionLoading === image.id}
-            >
-              {actionLoading === image.id ? (
-                <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-              ) : (
-                <Check className="h-4 w-4 mr-1" />
-              )}
-              Approve
-            </Button>
-            <Button 
-              size="sm" 
-              variant="destructive"
-              onClick={() => handleReject(image.id)}
-              className="flex-1"
-              disabled={actionLoading === image.id}
-            >
-              {actionLoading === image.id ? (
-                <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-              ) : (
-                <X className="h-4 w-4 mr-1" />
-              )}
-              Reject
-            </Button>
-          </div>
-        )}
+        <div className="flex space-x-2">
+          {showActions && image.status === "pending" && (
+            <>
+              <Button
+                size="sm"
+                onClick={() => handleApprove(image.id)}
+                className="flex-1"
+                disabled={actionLoading === image.id}
+              >
+                {actionLoading === image.id ? (
+                  <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                ) : (
+                  <Check className="h-4 w-4 mr-1" />
+                )}
+                Approve
+              </Button>
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={() => handleReject(image.id)}
+                className="flex-1"
+                disabled={actionLoading === image.id}
+              >
+                {actionLoading === image.id ? (
+                  <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                ) : (
+                  <X className="h-4 w-4 mr-1" />
+                )}
+                Reject
+              </Button>
+            </>
+          )}
+
+          {/* Delete button available for all images */}
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => handleDelete(image.id)}
+            disabled={actionLoading === image.id}
+            className="px-3"
+          >
+            {actionLoading === image.id ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Trash2 className="h-4 w-4" />
+            )}
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
