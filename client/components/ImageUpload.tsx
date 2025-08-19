@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils";
 
 interface ImageUploadProps {
   onClose: () => void;
-  onUpload: (files: File[]) => void;
+  onUpload: (imageData: Array<{ file: File; title: string; tags: string[] }>) => void;
+  uploading?: boolean;
 }
 
 interface ImagePreview {
