@@ -181,8 +181,7 @@ export default function Index() {
               <Camera className="h-5 w-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">PixelVault</h1>
-              <p className="text-xs text-muted-foreground">Image Library</p>
+              <h1 className="text-xl font-bold text-foreground">Tiktok Image Library</h1>
             </div>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
