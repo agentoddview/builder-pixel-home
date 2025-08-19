@@ -214,9 +214,9 @@ export default function Admin() {
           ))}
         </div>
 
-        <div className="flex space-x-2">
+        <div className="space-y-2">
           {showActions && image.status === "pending" && (
-            <>
+            <div className="flex space-x-2">
               <Button
                 size="sm"
                 onClick={() => handleApprove(image.id)}
@@ -244,7 +244,7 @@ export default function Admin() {
                 )}
                 Reject
               </Button>
-            </>
+            </div>
           )}
 
           {/* Delete button available for all images */}
@@ -253,12 +253,18 @@ export default function Admin() {
             variant="outline"
             onClick={() => handleDelete(image.id)}
             disabled={actionLoading === image.id}
-            className="px-3"
+            className="w-full"
           >
             {actionLoading === image.id ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Deleting...
+              </>
             ) : (
-              <Trash2 className="h-4 w-4" />
+              <>
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete Image
+              </>
             )}
           </Button>
         </div>
