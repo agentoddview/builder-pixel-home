@@ -231,7 +231,8 @@ export default function Index() {
                   >
                     <option value="all">All Images</option>
                     <option value="approved">Approved</option>
-                    <option value="pending">Pending</option>
+                    {isAdmin && <option value="pending">Pending</option>}
+                    {isAdmin && <option value="rejected">Rejected</option>}
                   </select>
                   <div className="flex rounded-md border border-input">
                     <Button
