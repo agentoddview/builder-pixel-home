@@ -7,20 +7,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminLogin } from "@/components/AdminLogin";
 import { imageApi, adminApi, authApi } from "@/lib/api";
 import { Image } from "@shared/api";
-import { 
-  Camera, 
-  ArrowLeft, 
-  Check, 
-  X, 
-  Clock, 
-  CheckCircle, 
-  XCircle, 
-  Users, 
+import {
+  Camera,
+  ArrowLeft,
+  Check,
+  X,
+  Clock,
+  CheckCircle,
+  XCircle,
+  Users,
   Image as ImageIcon,
   Filter,
   Calendar,
   LogOut,
-  Loader2
+  Loader2,
+  Trash2
 } from "lucide-react";
 
 export default function Admin() {
