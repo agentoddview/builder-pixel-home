@@ -18,6 +18,7 @@ import {
   Clock,
   CheckCircle,
   Loader2,
+  XCircle,
 } from "lucide-react";
 
 export default function Index() {
