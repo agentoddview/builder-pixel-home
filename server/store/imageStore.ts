@@ -33,7 +33,7 @@ class ImageStore {
         nextId = parsed.nextId || 1;
       } else {
         this.images = [...initialImages];
-        nextId = Math.max(...this.images.map(img => img.id)) + 1;
+        nextId = this.images.length > 0 ? Math.max(...this.images.map(img => img.id)) + 1 : 1;
         this.saveImages();
       }
     } catch (error) {
