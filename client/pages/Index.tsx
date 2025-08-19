@@ -30,6 +30,26 @@ export default function Index() {
   >("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showUpload, setShowUpload] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  // Load images on component mount
+  useEffect(() => {
+    loadImages();
+  }, []);
+
+  const loadImages = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const fetchedImages = await imageApi.getAllImages();
+      setImages(fetchedImages);
+    } catch (err) {
+      setError("Failed to load images. Please try again.");
+      console.error("Error loading images:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredImages = images.filter((image) => {
     const matchesSearch =
@@ -42,9 +62,26 @@ export default function Index() {
     return matchesSearch && matchesStatus;
   });
 
-  const handleImageUpload = useCallback((files: File[]) => {
-    console.log("Files uploaded:", files);
-    setShowUpload(false);
+  const handleImageUpload = useCallback(async (imageData: Array<{ file: File; title: string; tags: string[] }>) => {
+    try {
+      setUploading(true);
+
+      // Upload each image
+      const uploadPromises = imageData.map(({ file, title, tags }) =>
+        imageApi.uploadImage(file, title, tags, "Anonymous User")
+      );
+
+      await Promise.all(uploadPromises);
+
+      // Reload images to show the new uploads
+      await loadImages();
+      setShowUpload(false);
+    } catch (err) {
+      console.error("Upload error:", err);
+      setError("Failed to upload images. Please try again.");
+    } finally {
+      setUploading(false);
+    }
   }, []);
 
   const getStatusIcon = (status: string) => {
