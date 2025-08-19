@@ -303,7 +303,7 @@ export default function Contact() {
                 </h3>
                 <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                   Follow us on social media for the latest updates, featured
-                  images, and community highlights from PixelVault.
+                  images, and community highlights from Tiktok Image Library.
                 </p>
                 <div className="flex justify-center space-x-4">
                   <Button variant="outline" size="sm">
