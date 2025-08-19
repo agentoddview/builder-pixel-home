@@ -306,7 +306,7 @@ export default function Index() {
             }`}>
               {filteredImages.map((image) => (
                 <Card key={image.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300">
-                  <div className="relative aspect-square overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <img
                       src={image.url}
                       alt={image.title}
