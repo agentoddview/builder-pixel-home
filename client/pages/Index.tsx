@@ -316,13 +316,31 @@ export default function Index() {
                         e.currentTarget.src = "/placeholder.svg";
                       }}
                     />
-                    <div className="absolute top-2 right-2">
+                    <div className="absolute top-2 right-2 flex items-center space-x-2">
                       <Badge className={getStatusColor(image.status)}>
                         <div className="flex items-center space-x-1">
                           {getStatusIcon(image.status)}
                           <span className="capitalize">{image.status}</span>
                         </div>
                       </Badge>
+                      {isAdmin && (
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 h-8 w-8 p-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteImage(image.id, image.title);
+                          }}
+                          disabled={deletingImageId === image.id}
+                        >
+                          {deletingImageId === image.id ? (
+                            <Loader2 className="h-3 w-3 animate-spin" />
+                          ) : (
+                            <Trash2 className="h-3 w-3" />
+                          )}
+                        </Button>
+                      )}
                     </div>
                   </div>
                   <CardContent className="p-4">
