@@ -17,7 +17,7 @@ import {
   Image as ImageIcon,
   Filter,
   Calendar,
-  LogOut
+  LogOut,
 } from "lucide-react";
 
 // Extended mock data for admin view
@@ -33,7 +33,7 @@ const mockImages = [
     approvedBy: "Admin",
     tags: ["nature", "landscape", "mountains"],
     fileSize: "2.3 MB",
-    dimensions: "1920x1080"
+    dimensions: "1920x1080",
   },
   {
     id: 2,
@@ -44,7 +44,7 @@ const mockImages = [
     uploadDate: "2024-01-14",
     tags: ["architecture", "city", "modern"],
     fileSize: "3.1 MB",
-    dimensions: "2048x1366"
+    dimensions: "2048x1366",
   },
   {
     id: 3,
@@ -57,7 +57,7 @@ const mockImages = [
     approvedBy: "Admin",
     tags: ["ocean", "waves", "blue"],
     fileSize: "1.8 MB",
-    dimensions: "1600x900"
+    dimensions: "1600x900",
   },
   {
     id: 4,
@@ -68,7 +68,7 @@ const mockImages = [
     uploadDate: "2024-01-12",
     tags: ["abstract", "art", "colorful"],
     fileSize: "4.2 MB",
-    dimensions: "2560x1440"
+    dimensions: "2560x1440",
   },
   {
     id: 5,
@@ -82,7 +82,7 @@ const mockImages = [
     rejectionReason: "Image quality too low",
     tags: ["desert", "sunset", "orange"],
     fileSize: "1.2 MB",
-    dimensions: "1280x720"
+    dimensions: "1280x720",
   },
   {
     id: 6,
@@ -93,8 +93,8 @@ const mockImages = [
     uploadDate: "2024-01-10",
     tags: ["street", "urban", "night"],
     fileSize: "2.7 MB",
-    dimensions: "1920x1280"
-  }
+    dimensions: "1920x1280",
+  },
 ];
 
 type ImageStatus = "pending" | "approved" | "rejected";
@@ -105,30 +105,34 @@ export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleApprove = useCallback((imageId: number) => {
-    setImages(prev => prev.map(img => 
-      img.id === imageId 
-        ? { 
-            ...img, 
-            status: "approved" as const,
-            approvedDate: new Date().toISOString().split('T')[0],
-            approvedBy: "Current Admin"
-          }
-        : img
-    ));
+    setImages((prev) =>
+      prev.map((img) =>
+        img.id === imageId
+          ? {
+              ...img,
+              status: "approved" as const,
+              approvedDate: new Date().toISOString().split("T")[0],
+              approvedBy: "Current Admin",
+            }
+          : img,
+      ),
+    );
   }, []);
 
   const handleReject = useCallback((imageId: number, reason?: string) => {
-    setImages(prev => prev.map(img =>
-      img.id === imageId
-        ? {
-            ...img,
-            status: "rejected" as const,
-            rejectedDate: new Date().toISOString().split('T')[0],
-            rejectedBy: "Current Admin",
-            rejectionReason: reason || "Content policy violation"
-          }
-        : img
-    ));
+    setImages((prev) =>
+      prev.map((img) =>
+        img.id === imageId
+          ? {
+              ...img,
+              status: "rejected" as const,
+              rejectedDate: new Date().toISOString().split("T")[0],
+              rejectedBy: "Current Admin",
+              rejectionReason: reason || "Content policy violation",
+            }
+          : img,
+      ),
+    );
   }, []);
 
   const handleLogout = useCallback(() => {
@@ -136,7 +140,7 @@ export default function Admin() {
   }, []);
 
   const getImagesByStatus = (status: ImageStatus) => {
-    return images.filter(img => img.status === status);
+    return images.filter((img) => img.status === status);
   };
 
   const getStatusIcon = (status: ImageStatus) => {
@@ -189,7 +193,7 @@ export default function Admin() {
       </div>
       <CardContent className="p-4">
         <h3 className="font-semibold text-foreground mb-2">{image.title}</h3>
-        
+
         <div className="space-y-2 text-sm text-muted-foreground mb-4">
           <div className="flex justify-between">
             <span>Uploaded by:</span>
@@ -217,7 +221,9 @@ export default function Admin() {
 
         {image.status === "rejected" && image.rejectedDate && (
           <div className="text-xs text-red-600 dark:text-red-400 mb-3">
-            <div>Rejected on {image.rejectedDate} by {image.rejectedBy}</div>
+            <div>
+              Rejected on {image.rejectedDate} by {image.rejectedBy}
+            </div>
             {image.rejectionReason && (
               <div className="mt-1">Reason: {image.rejectionReason}</div>
             )}
@@ -234,16 +240,16 @@ export default function Admin() {
 
         {showActions && image.status === "pending" && (
           <div className="flex space-x-2">
-            <Button 
-              size="sm" 
+            <Button
+              size="sm"
               onClick={() => handleApprove(image.id)}
               className="flex-1"
             >
               <Check className="h-4 w-4 mr-1" />
               Approve
             </Button>
-            <Button 
-              size="sm" 
+            <Button
+              size="sm"
               variant="destructive"
               onClick={() => handleReject(image.id)}
               className="flex-1"
@@ -262,27 +268,41 @@ export default function Admin() {
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+          >
             <ArrowLeft className="h-5 w-5" />
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <Camera className="h-5 w-5 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">PixelVault</h1>
+                <h1 className="text-xl font-bold text-foreground">
+                  PixelVault
+                </h1>
                 <p className="text-xs text-muted-foreground">Admin Dashboard</p>
               </div>
             </div>
           </Link>
           <div className="flex items-center space-x-4">
             <nav className="hidden md:flex items-center space-x-6">
-              <Link to="/" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link
+                to="/"
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
                 Gallery
               </Link>
-              <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link
+                to="/contact"
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
                 Contact
               </Link>
-              <Link to="/admin" className="text-foreground hover:text-primary transition-colors">
+              <Link
+                to="/admin"
+                className="text-foreground hover:text-primary transition-colors"
+              >
                 Admin
               </Link>
             </nav>
@@ -298,9 +318,12 @@ export default function Admin() {
       <main className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">
+            Admin Dashboard
+          </h1>
           <p className="text-muted-foreground">
-            Review and manage uploaded images. Approve quality content or reject inappropriate submissions.
+            Review and manage uploaded images. Approve quality content or reject
+            inappropriate submissions.
           </p>
         </div>
 
@@ -308,7 +331,9 @@ export default function Admin() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Review</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Pending Review
+              </CardTitle>
               <Clock className="h-4 w-4 text-yellow-500" />
             </CardHeader>
             <CardContent>
@@ -325,9 +350,7 @@ export default function Admin() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{approvedCount}</div>
-              <p className="text-xs text-muted-foreground">
-                Live in gallery
-              </p>
+              <p className="text-xs text-muted-foreground">Live in gallery</p>
             </CardContent>
           </Card>
           <Card>
@@ -347,15 +370,24 @@ export default function Admin() {
         {/* Image Management Tabs */}
         <Tabs value={selectedTab} onValueChange={setSelectedTab}>
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="pending" className="flex items-center space-x-2">
+            <TabsTrigger
+              value="pending"
+              className="flex items-center space-x-2"
+            >
               <Clock className="h-4 w-4" />
               <span>Pending ({pendingCount})</span>
             </TabsTrigger>
-            <TabsTrigger value="approved" className="flex items-center space-x-2">
+            <TabsTrigger
+              value="approved"
+              className="flex items-center space-x-2"
+            >
               <CheckCircle className="h-4 w-4" />
               <span>Approved ({approvedCount})</span>
             </TabsTrigger>
-            <TabsTrigger value="rejected" className="flex items-center space-x-2">
+            <TabsTrigger
+              value="rejected"
+              className="flex items-center space-x-2"
+            >
               <XCircle className="h-4 w-4" />
               <span>Rejected ({rejectedCount})</span>
             </TabsTrigger>
@@ -363,44 +395,61 @@ export default function Admin() {
 
           <TabsContent value="pending" className="mt-6">
             <div className="mb-4">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Images Pending Review</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Images Pending Review
+              </h3>
               <p className="text-muted-foreground">
-                Review these images and decide whether to approve or reject them.
+                Review these images and decide whether to approve or reject
+                them.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {getImagesByStatus("pending").map(image => renderImageCard(image, true))}
+              {getImagesByStatus("pending").map((image) =>
+                renderImageCard(image, true),
+              )}
             </div>
             {pendingCount === 0 && (
               <div className="text-center py-12">
                 <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-foreground mb-2">No pending images</h3>
-                <p className="text-muted-foreground">All images have been reviewed!</p>
+                <h3 className="text-lg font-medium text-foreground mb-2">
+                  No pending images
+                </h3>
+                <p className="text-muted-foreground">
+                  All images have been reviewed!
+                </p>
               </div>
             )}
           </TabsContent>
 
           <TabsContent value="approved" className="mt-6">
             <div className="mb-4">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Approved Images</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Approved Images
+              </h3>
               <p className="text-muted-foreground">
                 These images are live in the gallery and visible to all users.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {getImagesByStatus("approved").map(image => renderImageCard(image))}
+              {getImagesByStatus("approved").map((image) =>
+                renderImageCard(image),
+              )}
             </div>
           </TabsContent>
 
           <TabsContent value="rejected" className="mt-6">
             <div className="mb-4">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Rejected Images</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Rejected Images
+              </h3>
               <p className="text-muted-foreground">
                 These images were rejected and are not visible to users.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {getImagesByStatus("rejected").map(image => renderImageCard(image))}
+              {getImagesByStatus("rejected").map((image) =>
+                renderImageCard(image),
+              )}
             </div>
           </TabsContent>
         </Tabs>

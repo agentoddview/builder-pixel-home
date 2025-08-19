@@ -29,14 +29,14 @@ export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
   const handleDragEnter = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragCounter(prev => prev + 1);
+    setDragCounter((prev) => prev + 1);
     setIsDragOver(true);
   }, []);
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragCounter(prev => {
+    setDragCounter((prev) => {
       const newCount = prev - 1;
       if (newCount === 0) {
         setIsDragOver(false);
@@ -60,15 +60,18 @@ export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
     handleFiles(droppedFiles);
   }, []);
 
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = Array.from(e.target.files || []);
-    handleFiles(selectedFiles);
-  }, []);
+  const handleFileSelect = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const selectedFiles = Array.from(e.target.files || []);
+      handleFiles(selectedFiles);
+    },
+    [],
+  );
 
   const handleFiles = useCallback((files: File[]) => {
-    const imageFiles = files.filter(file => file.type.startsWith('image/'));
-    
-    imageFiles.forEach(file => {
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+
+    imageFiles.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const url = e.target?.result as string;
@@ -76,45 +79,57 @@ export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
           file,
           url,
           title: file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
-          tags: []
+          tags: [],
         };
-        setImages(prev => [...prev, newImage]);
+        setImages((prev) => [...prev, newImage]);
       };
       reader.readAsDataURL(file);
     });
   }, []);
 
   const removeImage = useCallback((index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setImages((prev) => prev.filter((_, i) => i !== index));
   }, []);
 
-  const updateImage = useCallback((index: number, updates: Partial<Pick<ImagePreview, 'title' | 'tags'>>) => {
-    setImages(prev => prev.map((img, i) => i === index ? { ...img, ...updates } : img));
-  }, []);
+  const updateImage = useCallback(
+    (index: number, updates: Partial<Pick<ImagePreview, "title" | "tags">>) => {
+      setImages((prev) =>
+        prev.map((img, i) => (i === index ? { ...img, ...updates } : img)),
+      );
+    },
+    [],
+  );
 
   const addTag = useCallback((index: number, tag: string) => {
     if (!tag.trim()) return;
     const normalizedTag = tag.trim().toLowerCase();
-    setImages(prev => prev.map((img, i) => {
-      if (i === index && !img.tags.includes(normalizedTag)) {
-        return { ...img, tags: [...img.tags, normalizedTag] };
-      }
-      return img;
-    }));
+    setImages((prev) =>
+      prev.map((img, i) => {
+        if (i === index && !img.tags.includes(normalizedTag)) {
+          return { ...img, tags: [...img.tags, normalizedTag] };
+        }
+        return img;
+      }),
+    );
   }, []);
 
   const removeTag = useCallback((index: number, tagToRemove: string) => {
-    setImages(prev => prev.map((img, i) => {
-      if (i === index) {
-        return { ...img, tags: img.tags.filter(tag => tag !== tagToRemove) };
-      }
-      return img;
-    }));
+    setImages((prev) =>
+      prev.map((img, i) => {
+        if (i === index) {
+          return {
+            ...img,
+            tags: img.tags.filter((tag) => tag !== tagToRemove),
+          };
+        }
+        return img;
+      }),
+    );
   }, []);
 
   const handleSubmit = useCallback(() => {
     if (images.length === 0) return;
-    onUpload(images.map(img => img.file));
+    onUpload(images.map((img) => img.file));
   }, [images, onUpload]);
 
   return (
@@ -133,7 +148,7 @@ export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
               "border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer",
               isDragOver
                 ? "border-primary bg-primary/5"
-                : "border-muted-foreground/25 hover:border-primary/50"
+                : "border-muted-foreground/25 hover:border-primary/50",
             )}
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
@@ -141,10 +156,12 @@ export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
           >
-            <Upload className={cn(
-              "h-12 w-12 mx-auto mb-4",
-              isDragOver ? "text-primary" : "text-muted-foreground"
-            )} />
+            <Upload
+              className={cn(
+                "h-12 w-12 mx-auto mb-4",
+                isDragOver ? "text-primary" : "text-muted-foreground",
+              )}
+            />
             <h3 className="text-lg font-semibold mb-2">
               {isDragOver ? "Drop your images here" : "Drag & drop images here"}
             </h3>
@@ -196,13 +213,18 @@ export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
                       {/* Image Details */}
                       <div className="flex-1 space-y-3">
                         <div>
-                          <Label htmlFor={`title-${index}`} className="text-sm font-medium">
+                          <Label
+                            htmlFor={`title-${index}`}
+                            className="text-sm font-medium"
+                          >
                             Title
                           </Label>
                           <Input
                             id={`title-${index}`}
                             value={image.title}
-                            onChange={(e) => updateImage(index, { title: e.target.value })}
+                            onChange={(e) =>
+                              updateImage(index, { title: e.target.value })
+                            }
                             placeholder="Enter image title..."
                             className="mt-1"
                           />
@@ -212,7 +234,11 @@ export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
                           <Label className="text-sm font-medium">Tags</Label>
                           <div className="flex flex-wrap gap-2 mt-1 mb-2">
                             {image.tags.map((tag) => (
-                              <Badge key={tag} variant="secondary" className="flex items-center gap-1">
+                              <Badge
+                                key={tag}
+                                variant="secondary"
+                                className="flex items-center gap-1"
+                              >
                                 {tag}
                                 <button
                                   onClick={() => removeTag(index, tag)}
@@ -226,11 +252,11 @@ export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
                           <Input
                             placeholder="Add tags (press Enter)"
                             onKeyDown={(e) => {
-                              if (e.key === 'Enter') {
+                              if (e.key === "Enter") {
                                 e.preventDefault();
                                 const input = e.target as HTMLInputElement;
                                 addTag(index, input.value);
-                                input.value = '';
+                                input.value = "";
                               }
                             }}
                             className="text-sm"
@@ -265,7 +291,7 @@ export function ImageUpload({ onClose, onUpload }: ImageUploadProps) {
             <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button 
+            <Button
               onClick={handleSubmit}
               disabled={images.length === 0}
               className="min-w-[120px]"

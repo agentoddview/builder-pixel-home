@@ -12,7 +12,7 @@ interface AdminLoginProps {
 export function AdminLogin({ onLogin }: AdminLoginProps) {
   const [credentials, setCredentials] = useState({
     username: "",
-    password: ""
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,23 +24,29 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
     setError("");
 
     // Simple demo authentication - in production use proper auth
-    if (credentials.username === "admin" && credentials.password === "password123") {
+    if (
+      credentials.username === "admin" &&
+      credentials.password === "password123"
+    ) {
       setTimeout(() => {
         onLogin(true);
         setIsLoading(false);
       }, 1000);
     } else {
       setTimeout(() => {
-        setError("Invalid credentials. Try username: 'admin', password: 'password123'");
+        setError(
+          "Invalid credentials. Try username: 'admin', password: 'password123'",
+        );
         setIsLoading(false);
       }, 1000);
     }
   };
 
-  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCredentials(prev => ({ ...prev, [field]: e.target.value }));
-    setError("");
-  };
+  const handleInputChange =
+    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCredentials((prev) => ({ ...prev, [field]: e.target.value }));
+      setError("");
+    };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -71,7 +77,7 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
@@ -90,7 +96,11 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -115,7 +125,9 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
 
           <div className="mt-6 text-center">
             <div className="bg-muted/50 rounded-lg p-3">
-              <p className="text-xs text-muted-foreground mb-2">Demo Credentials:</p>
+              <p className="text-xs text-muted-foreground mb-2">
+                Demo Credentials:
+              </p>
               <p className="text-xs font-mono">Username: admin</p>
               <p className="text-xs font-mono">Password: password123</p>
             </div>

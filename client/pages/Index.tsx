@@ -5,7 +5,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ImageUpload } from "@/components/ImageUpload";
-import { Camera, Search, Filter, Grid, List, Upload, Star, Clock, CheckCircle } from "lucide-react";
+import {
+  Camera,
+  Search,
+  Filter,
+  Grid,
+  List,
+  Upload,
+  Star,
+  Clock,
+  CheckCircle,
+} from "lucide-react";
 
 // Mock data for demo purposes
 const mockImages = [
@@ -16,7 +26,7 @@ const mockImages = [
     status: "approved" as const,
     uploadedBy: "John Doe",
     uploadDate: "2024-01-15",
-    tags: ["nature", "landscape", "mountains"]
+    tags: ["nature", "landscape", "mountains"],
   },
   {
     id: 2,
@@ -25,7 +35,7 @@ const mockImages = [
     status: "pending" as const,
     uploadedBy: "Jane Smith",
     uploadDate: "2024-01-14",
-    tags: ["architecture", "city", "modern"]
+    tags: ["architecture", "city", "modern"],
   },
   {
     id: 3,
@@ -34,7 +44,7 @@ const mockImages = [
     status: "approved" as const,
     uploadedBy: "Mike Johnson",
     uploadDate: "2024-01-13",
-    tags: ["ocean", "waves", "blue"]
+    tags: ["ocean", "waves", "blue"],
   },
   {
     id: 4,
@@ -43,7 +53,7 @@ const mockImages = [
     status: "approved" as const,
     uploadedBy: "Sarah Wilson",
     uploadDate: "2024-01-12",
-    tags: ["forest", "path", "green"]
+    tags: ["forest", "path", "green"],
   },
   {
     id: 5,
@@ -52,7 +62,7 @@ const mockImages = [
     status: "pending" as const,
     uploadedBy: "Tom Brown",
     uploadDate: "2024-01-11",
-    tags: ["desert", "sunset", "orange"]
+    tags: ["desert", "sunset", "orange"],
   },
   {
     id: 6,
@@ -61,21 +71,27 @@ const mockImages = [
     status: "approved" as const,
     uploadedBy: "Lisa Davis",
     uploadDate: "2024-01-10",
-    tags: ["street", "urban", "night"]
-  }
+    tags: ["street", "urban", "night"],
+  },
 ];
 
 export default function Index() {
   const [images] = useState(mockImages);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"all" | "approved" | "pending">("all");
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | "approved" | "pending"
+  >("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showUpload, setShowUpload] = useState(false);
 
-  const filteredImages = images.filter(image => {
-    const matchesSearch = image.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         image.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesStatus = statusFilter === "all" || image.status === statusFilter;
+  const filteredImages = images.filter((image) => {
+    const matchesSearch =
+      image.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      image.tags.some((tag) =>
+        tag.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+    const matchesStatus =
+      statusFilter === "all" || image.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
@@ -121,17 +137,26 @@ export default function Index() {
             </div>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               Gallery
             </Link>
-            <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+            <Link
+              to="/contact"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
               Contact
             </Link>
-            <Link to="/admin" className="text-muted-foreground hover:text-primary transition-colors">
+            <Link
+              to="/admin"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
               Admin
             </Link>
           </nav>
-          <Button 
+          <Button
             onClick={() => setShowUpload(true)}
             className="flex items-center space-x-2"
           >
@@ -149,12 +174,13 @@ export default function Index() {
             Share Your <span className="text-primary">Visual Stories</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Upload, share, and discover amazing images in our curated collection. 
-            Every image goes through our approval process to ensure quality.
+            Upload, share, and discover amazing images in our curated
+            collection. Every image goes through our approval process to ensure
+            quality.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               onClick={() => setShowUpload(true)}
               className="flex items-center space-x-2"
             >
@@ -186,7 +212,11 @@ export default function Index() {
               <Filter className="h-4 w-4 text-muted-foreground" />
               <select
                 value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as "all" | "approved" | "pending")}
+                onChange={(e) =>
+                  setStatusFilter(
+                    e.target.value as "all" | "approved" | "pending",
+                  )
+                }
                 className="px-3 py-2 rounded-md border border-input bg-background text-foreground text-sm"
               >
                 <option value="all">All Images</option>
@@ -216,13 +246,18 @@ export default function Index() {
         </div>
 
         {/* Image Gallery */}
-        <div className={`grid gap-6 ${
-          viewMode === "grid" 
-            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
-            : "grid-cols-1"
-        }`}>
+        <div
+          className={`grid gap-6 ${
+            viewMode === "grid"
+              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              : "grid-cols-1"
+          }`}
+        >
           {filteredImages.map((image) => (
-            <Card key={image.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300">
+            <Card
+              key={image.id}
+              className="group overflow-hidden hover:shadow-lg transition-all duration-300"
+            >
               <div className="relative aspect-square overflow-hidden">
                 <img
                   src={image.url}
@@ -239,7 +274,9 @@ export default function Index() {
                 </div>
               </div>
               <CardContent className="p-4">
-                <h3 className="font-semibold text-foreground mb-2">{image.title}</h3>
+                <h3 className="font-semibold text-foreground mb-2">
+                  {image.title}
+                </h3>
                 <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
                   <span>by {image.uploadedBy}</span>
                   <span>{image.uploadDate}</span>
@@ -259,12 +296,13 @@ export default function Index() {
         {filteredImages.length === 0 && (
           <div className="text-center py-12">
             <Camera className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-foreground mb-2">No images found</h3>
+            <h3 className="text-lg font-medium text-foreground mb-2">
+              No images found
+            </h3>
             <p className="text-muted-foreground mb-4">
-              {searchTerm || statusFilter !== "all" 
-                ? "Try adjusting your search or filters" 
-                : "Be the first to upload an image to the library!"
-              }
+              {searchTerm || statusFilter !== "all"
+                ? "Try adjusting your search or filters"
+                : "Be the first to upload an image to the library!"}
             </p>
             <Button onClick={() => setShowUpload(true)}>
               Upload First Image
