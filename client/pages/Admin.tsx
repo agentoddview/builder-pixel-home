@@ -150,7 +150,7 @@ export default function Admin() {
 
   const renderImageCard = (image: Image, showActions = false) => (
     <Card key={image.id} className="overflow-hidden">
-      <div className="relative aspect-video">
+      <div className="relative aspect-[4/3]">
         <img
           src={image.url}
           alt={image.title}
