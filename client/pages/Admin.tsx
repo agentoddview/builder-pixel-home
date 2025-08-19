@@ -90,6 +90,23 @@ export default function Admin() {
     }
   }, []);
 
+  const handleDelete = useCallback(async (imageId: number) => {
+    if (!confirm("Are you sure you want to permanently delete this image? This action cannot be undone.")) {
+      return;
+    }
+
+    try {
+      setActionLoading(imageId);
+      await adminApi.deleteImage(imageId);
+      await loadImages(); // Reload to get updated data
+    } catch (err) {
+      console.error("Error deleting image:", err);
+      setError("Failed to delete image. Please try again.");
+    } finally {
+      setActionLoading(null);
+    }
+  }, []);
+
   const handleLogout = useCallback(() => {
     authApi.logout();
     setIsAuthenticated(false);
