@@ -353,12 +353,14 @@ export default function Index() {
                       }}
                     />
                     <div className="absolute top-2 right-2 flex items-center space-x-2">
-                      <Badge className={getStatusColor(image.status)}>
-                        <div className="flex items-center space-x-1">
-                          {getStatusIcon(image.status)}
-                          <span className="capitalize">{image.status}</span>
-                        </div>
-                      </Badge>
+                      {isAdmin && (
+                        <Badge className={getStatusColor(image.status)}>
+                          <div className="flex items-center space-x-1">
+                            {getStatusIcon(image.status)}
+                            <span className="capitalize">{image.status}</span>
+                          </div>
+                        </Badge>
+                      )}
                       {isAdmin && (
                         <Button
                           size="sm"
