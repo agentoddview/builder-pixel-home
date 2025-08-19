@@ -26,7 +26,7 @@ export default function Index() {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<
-    "all" | "approved" | "pending"
+    "all" | "approved" | "pending" | "rejected"
   >("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showUpload, setShowUpload] = useState(false);
