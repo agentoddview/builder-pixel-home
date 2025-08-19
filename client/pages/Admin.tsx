@@ -298,7 +298,7 @@ export default function Admin() {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-foreground">
-                  PixelVault
+                  Tiktok Image Library
                 </h1>
                 <p className="text-xs text-muted-foreground">Admin Dashboard</p>
               </div>
